@@ -1,0 +1,10 @@
+# Dependencies for Homework_Group30_T1.ipynb
+matplotlib
+numpy
+pandas
+scipy
+scikit-learn
+seaborn>=0.13
+
+# Python kernel for running the notebook in Jupyter or VS Code
+ipykernel

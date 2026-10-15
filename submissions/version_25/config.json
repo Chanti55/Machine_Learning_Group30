@@ -1,0 +1,25 @@
+{
+  "version": "version_25",
+  "created_at": "2026-10-15T01:36:37.671443",
+  "model_type": "LogisticRegression",
+  "hyperparameters": {
+    "C": 0.01,
+    "class_weight": null,
+    "dual": false,
+    "fit_intercept": true,
+    "intercept_scaling": 1,
+    "l1_ratio": 0.0,
+    "max_iter": 3000,
+    "n_jobs": null,
+    "penalty": "deprecated",
+    "random_state": 42,
+    "solver": "lbfgs",
+    "tol": 0.0001,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "features_count": 41,
+  "decision_threshold": 0.5,
+  "cleaning_recipe_included": true,
+  "notes": "LR_L1_tau50: LogisticRegression (C=0.01) on L1 features (41) at tau=0.50 | CV F1=0.7507 Acc=0.7245 AUC=0.7906"
+}

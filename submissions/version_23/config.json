@@ -1,0 +1,25 @@
+{
+  "version": "version_23",
+  "created_at": "2026-10-15T01:36:37.502319",
+  "model_type": "LogisticRegression",
+  "hyperparameters": {
+    "C": 0.5,
+    "class_weight": null,
+    "dual": false,
+    "fit_intercept": true,
+    "intercept_scaling": 1,
+    "l1_ratio": 0.0,
+    "max_iter": 3000,
+    "n_jobs": null,
+    "penalty": "deprecated",
+    "random_state": 42,
+    "solver": "lbfgs",
+    "tol": 0.0001,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "features_count": 44,
+  "decision_threshold": 0.44,
+  "cleaning_recipe_included": true,
+  "notes": "Best F1: LogisticRegression (C=0.5) on Vote features (44) at tau=0.44 | CV F1=0.7605 Acc=0.7202 AUC=0.7954"
+}

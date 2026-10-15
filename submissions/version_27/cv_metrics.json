@@ -1,0 +1,16 @@
+{
+  "version": "version_27",
+  "local_cv_metrics": {
+    "customer_val_roc_auc": 0.7886,
+    "customer_val_f1": 0.7496,
+    "cv_accuracy": 0.7235
+  },
+  "prediction_diagnostics": {
+    "test_rows": 986,
+    "predicted_0": 332,
+    "predicted_1": 654,
+    "predicted_1_rate": 0.6633
+  },
+  "kaggle_public_score": 0.79069,
+  "kaggle_private_score": null
+}

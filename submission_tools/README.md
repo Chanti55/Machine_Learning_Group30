@@ -1,44 +1,41 @@
-# 🛠️ Submission & Reporting Tools (Group 30)
+# Submission & Reporting Tools (Group 30)
 
-This folder contains the complete, reproducible tooling used to generate test predictions, package version bundles, auto-generate markdown reports, and maintain the Kaggle leaderboard.
+These are the scripts we use to turn model predictions into Kaggle submissions without
+losing track of what we actually submitted. Every version gets its own folder with the
+predictions, the config and a short report, so we can still reconstruct a run weeks later.
 
----
+## Files
 
-## 📦 What's Inside
-
-| File | Purpose |
+| File | What it does |
 | :--- | :--- |
-| **`submission_tracker.py`** | Core engine that exports self-contained version bundles, generates individual `REPORT.md` files, formats fluent Kaggle descriptions, and refreshes `submissions/LEADERBOARD.md`. |
-| **`record_score.py`** | Command-line tool to quickly record official Kaggle leaderboard scores and update all reports in one step. |
-| **`batch_exporter.py`** | Reference batch execution script showing how to fit models, sweep thresholds, and export new versions. |
+| `submission_tracker.py` | The main module. Exports a version bundle, writes its `REPORT.md`, builds the Kaggle description text and rebuilds `submissions/LEADERBOARD.md`. |
+| `record_score.py` | Small CLI for entering the public leaderboard score once Kaggle has scored a submission. |
+| `batch_exporter.py` | Example script: fits a few models, tries different thresholds and exports each result as a new version. Mostly there as a reference. |
 
----
+## Dependencies
 
-## ⚡ Zero Extra Dependencies
-This toolkit is built using **100% pure Python** plus the standard packages already present in `requirements.txt`:
-* Standard Library: `json`, `shutil`, `pathlib`, `datetime`
-* Core Packages: `numpy`, `pandas`, `scikit-learn` (includes `joblib`)
+Nothing beyond `requirements.txt`. From the standard library we use `json`, `shutil`,
+`pathlib` and `datetime`; otherwise it's `numpy`, `pandas` and `scikit-learn`
+(`joblib` comes with it). We first built the leaderboard table with `tabulate`, then
+dropped it because writing a Markdown table by hand is about ten lines.
 
-**No extra packages (such as `tabulate`) are needed.**
+## Usage
 
----
+### Recording a Kaggle score
 
-## 🚀 Quick Usage
+After Kaggle returns a score:
 
-### 1. Recording a Kaggle Score
-When you submit a prediction to Kaggle and receive a score, run:
 ```bash
 python submission_tools/record_score.py version_21 0.7947
 ```
-*(Or simply run `python submission_tools/record_score.py` and follow the interactive prompts).*
 
-This automatically updates:
-1. `submissions/version_XX/cv_metrics.json`
-2. `submissions/version_XX/REPORT.md`
-3. `submissions/LEADERBOARD.md`
+Run it without arguments and it asks for the version and score. Either way, it updates
+three files: `cv_metrics.json` and `REPORT.md` in the version folder, plus
+`submissions/LEADERBOARD.md`.
 
-### 2. Exporting a New Version Bundle from Python
-In any notebook or script, you can package a submission with one call:
+### Exporting a new version
+
+From a notebook or script:
 
 ```python
 import sys
@@ -60,12 +57,13 @@ sub_path = export_submission_bundle(
 )
 ```
 
-This automatically generates the entire bundle in `submissions/version_23/`:
-* `ML_Group30_Version23.csv` *(validated 986-row test predictions)*
-* `REPORT.md` *(full markdown report with distribution & metrics)*
-* `description.txt` *(fluent copy-paste text for Kaggle)*
-* `config.json` *(exact hyperparameters and settings)*
-* `selected_features.json` *(retained feature names)*
-* `cleaning_recipe.json` *(preprocessing recipe used)*
-* `model.joblib` *(fitted estimator for instant inference)*
+That creates `submissions/version_23/` containing:
+
+- `ML_Group30_Version23.csv`: the predictions. The function checks that all 986 test rows are present before writing.
+- `REPORT.md`: metrics, threshold and the distribution of predicted classes
+- `description.txt`: text you can paste straight into the Kaggle submission description
+- `config.json`: hyperparameters and settings, so the run can be repeated
+
+One thing to watch: `version_name` is not checked against existing folders. If you reuse
+a name, the old bundle gets overwritten.` *(fitted estimator for instant inference)*
 * Refreshes `submissions/LEADERBOARD.md`

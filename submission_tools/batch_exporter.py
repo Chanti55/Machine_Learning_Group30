@@ -1,9 +1,7 @@
-"""
-Batch model training, cross-validation, and submission bundle exporter.
-Demonstrates how to export fully reproducible versions with REPORT.md into submissions/
-Usage:
-    python submission_tools/batch_exporter.py
-"""
+
+# Demonstrates how to export fully reproducible versions with REPORT.md into submissions/
+# Usage: python submission_tools/batch_exporter.py
+
 from pathlib import Path
 import sys
 import shutil

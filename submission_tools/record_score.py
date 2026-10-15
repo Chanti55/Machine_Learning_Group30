@@ -1,10 +1,7 @@
-"""
-CLI tool to record official Kaggle leaderboard scores and regenerate reports.
-Usage:
-    python submission_tools/record_score.py version_21 0.7947
-    or simply:
-    python submission_tools/record_score.py
-"""
+
+# Usage:
+# python submission_tools/record_score.py version_21 0.7947 or simply: python submission_tools/record_score.py
+
 import sys
 from pathlib import Path
 
@@ -42,7 +39,7 @@ def main():
         private_score = None
 
     record_kaggle_score(vname, score, private_score=private_score)
-    print("\n✅ Done! The following files have been updated:")
+    print("\n The following files have been updated:")
     print(f"   - submissions/{vname}/cv_metrics.json")
     print(f"   - submissions/{vname}/REPORT.md")
     print("   - submissions/LEADERBOARD.md\n")

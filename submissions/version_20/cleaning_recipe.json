@@ -1,0 +1,129 @@
+{
+  "dataset": "everything_and_then_some",
+  "steps": [
+    {
+      "column": "All (empty rows)",
+      "action": "drop_rows",
+      "reason": "65 rows in train.csv have all feature values missing (uninformative); test rows are never dropped",
+      "rows_affected": 65,
+      "carries": {
+        "drop_empty": true
+      }
+    },
+    {
+      "column": "days_since_previous_purchase & prior_mean_gap_days",
+      "action": "blank_to_nan",
+      "reason": "Software sentinel code of -4 days represents unrecorded history, not genuine negative time",
+      "rows_affected": 648,
+      "carries": {
+        "sentinel_threshold": 0
+      }
+    },
+    {
+      "column": "prior_mean_purchase_value",
+      "action": "recalculate",
+      "reason": "Deterministic arithmetic quantity: recomputed as prior_total_spend / prior_purchase_count",
+      "rows_affected": 6469,
+      "carries": {
+        "recompute_formula": "prior_total_spend / prior_purchase_count"
+      }
+    },
+    {
+      "column": "prior_max_purchase_value",
+      "action": "blank_to_nan",
+      "reason": "Single purchase amount cannot exceed prior total spend (physical impossibility)",
+      "rows_affected": 7,
+      "carries": {
+        "bound_column": "prior_total_spend"
+      }
+    },
+    {
+      "column": "spend_365d",
+      "action": "repair_sign_and_placeholders",
+      "reason": "Values >= 1e8 are placeholders (set to NaN); negative amounts are sign errors (.abs()); > total spend set to NaN",
+      "rows_affected": 23,
+      "carries": {
+        "placeholder_bound": 100000000.0
+      }
+    },
+    {
+      "column": "prior_total_spend (extremes)",
+      "action": "retain_and_log1p",
+      "reason": "642 IQR outliers represent legitimate loyal high-value customers (84.1% repeat rate); variance compressed with log1p instead of row deletion",
+      "rows_affected": 642,
+      "carries": {
+        "treatment": "log1p",
+        "drop_outliers": false
+      }
+    },
+    {
+      "column": "Structural gap features (days_since_previous_purchase, std, etc.)",
+      "action": "structural_fill_zero_and_flag",
+      "reason": "First-time buyers (k=0) have undefined purchase history by definition; fill with 0 and add is_first_purchase and has_gap_history flags",
+      "rows_affected": 1413,
+      "carries": {
+        "structural_fill": 0.0,
+        "flags": [
+          "is_first_purchase",
+          "has_gap_history"
+        ]
+      }
+    },
+    {
+      "column": "warehouse & document_series",
+      "action": "drop_columns",
+      "reason": "warehouse is 99.7% constant (near-zero variance); document_series reflects historical invoice book numbering with no predictive signal",
+      "rows_affected": 6469,
+      "carries": {
+        "dropped": [
+          "warehouse",
+          "document_series"
+        ]
+      }
+    },
+    {
+      "column": "purchase_date",
+      "action": "extract_month_and_drop_year",
+      "reason": "Month captures strong, stable seasonality (r=0.81 across epochs); year is dropped to prevent distribution drift on unseen future test years",
+      "rows_affected": 6469,
+      "carries": {
+        "extract": "month",
+        "dropped": "year"
+      }
+    },
+    {
+      "column": "clientes.csv",
+      "action": "discard_auxiliary_table",
+      "reason": "Empirical ablation across 5 customer-grouped CV folds showed no statistical gain (+0.0003 for LogReg, -0.0019 for Tree)",
+      "rows_affected": 6469,
+      "carries": {
+        "use_clientes": false
+      }
+    },
+    {
+      "column": "Engineered Interaction Features",
+      "action": "add_domain_ratios",
+      "reason": "Added purchases_per_year, typical_gap_le_90, discount_rate, zero_cost, has_shipping",
+      "rows_affected": 6469,
+      "carries": {
+        "new_features": [
+          "purchases_per_year",
+          "typical_gap_le_90",
+          "discount_rate",
+          "zero_cost",
+          "has_shipping"
+        ]
+      }
+    },
+    {
+      "column": "Numeric columns (skewed amounts and counts)",
+      "action": "log1p_and_standard_scaler",
+      "reason": "log1p brings median absolute skew down from 3.7 to 0.99; StandardScaler ensures convergence for regularized linear models",
+      "rows_affected": 6469,
+      "carries": {
+        "transform": "log1p",
+        "scaler": "StandardScaler"
+      }
+    }
+  ]
+}

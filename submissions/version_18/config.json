@@ -1,0 +1,25 @@
+{
+  "version": "version_18",
+  "created_at": "2026-10-15T00:52:32.505143",
+  "model_type": "LogisticRegression",
+  "hyperparameters": {
+    "C": 0.1,
+    "class_weight": null,
+    "dual": false,
+    "fit_intercept": true,
+    "intercept_scaling": 1,
+    "l1_ratio": 0.0,
+    "max_iter": 3000,
+    "n_jobs": null,
+    "penalty": "deprecated",
+    "random_state": 42,
+    "solver": "lbfgs",
+    "tol": 0.0001,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "features_count": 45,
+  "decision_threshold": 0.41,
+  "cleaning_recipe_included": true,
+  "notes": "Group 30 Version 18: Alternative ROC-AUC pipeline with all 6 critiques resolved (ID-like variables audited and pruned, empirical random_noise floor tested, 2-of-3 Majority Vote features, and optimal F1 threshold tau=0.41)."
+}

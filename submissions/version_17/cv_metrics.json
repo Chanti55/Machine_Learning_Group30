@@ -1,0 +1,17 @@
+{
+  "version": "version_17",
+  "local_cv_metrics": {
+    "customer_val_roc_auc": 0.7903,
+    "customer_val_f1": 0.7574,
+    "customer_val_balanced_acc": 0.7255,
+    "temporal_val_roc_auc": 0.7931
+  },
+  "prediction_diagnostics": {
+    "test_rows": 986,
+    "predicted_0": 231,
+    "predicted_1": 755,
+    "predicted_1_rate": 0.7657
+  },
+  "kaggle_public_score": 0.79136,
+  "kaggle_private_score": null
+}

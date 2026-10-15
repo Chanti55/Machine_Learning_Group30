@@ -1,0 +1,10 @@
+{
+  "version": "version_20",
+  "created_at": "2026-10-15T01:05:41.510830",
+  "model_type": "SoftBlendClassifier",
+  "hyperparameters": {},
+  "features_count": 44,
+  "decision_threshold": 0.45,
+  "cleaning_recipe_included": true,
+  "notes": "Soft Blend Ensemble (45% GB + 35% LogReg + 20% RF) on 44 Vote features at tau=0.45 (65 diffs vs v18)"
+}

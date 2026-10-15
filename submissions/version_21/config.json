@@ -1,0 +1,25 @@
+{
+  "version": "version_21",
+  "created_at": "2026-10-15T01:05:41.654213",
+  "model_type": "LogisticRegression",
+  "hyperparameters": {
+    "C": 0.1,
+    "class_weight": null,
+    "dual": false,
+    "fit_intercept": true,
+    "intercept_scaling": 1,
+    "l1_ratio": 0.0,
+    "max_iter": 2000,
+    "n_jobs": null,
+    "penalty": "deprecated",
+    "random_state": 42,
+    "solver": "lbfgs",
+    "tol": 0.0001,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "features_count": 44,
+  "decision_threshold": 0.5,
+  "cleaning_recipe_included": true,
+  "notes": "Tuned L2 Logistic Regression (C=0.1) on 44 Vote features at standard tau=0.50 (113 diffs vs v18, 65.1% repeats)"
+}
